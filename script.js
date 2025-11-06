@@ -8,11 +8,23 @@ async function scan() {
   document.getElementById('result').classList.remove('hidden');
 
   try {
-    const res = await scanner({ resume: text });
-    render(res.data);
+    const response = await fetch('/api', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ resume: text }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    render(data);
   } catch (e) {
     document.getElementById('result').innerHTML = 
-      `<p class="text-red-600">Firebase Functions 호출 실패. 콘솔 확인!</p>`;
+      `<p class="text-red-600">API 호출 실패. 콘솔 확인!</p>`;
     console.error(e);
   }
 }
