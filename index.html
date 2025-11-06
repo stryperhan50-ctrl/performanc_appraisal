@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Talent Scanner Pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {}
+      }
+    }
+  </script>
+  <!-- Custom score classes removed; use Tailwind utility classes directly in HTML elements -->
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto max-w-4xl p-6">
+    <h1 class="text-3xl font-bold text-center mb-2">Talent Scanner Pro</h1>
+    <p class="text-center text-gray-600 mb-8">Firebase AI 없이도 6개월 성과 예측</p>
+
+    <textarea id="input" class="w-full h-64 p-4 border rounded-lg" 
+      placeholder="이력서/자소서 전문 붙여넣기"></textarea>
+
+    <button onclick="scan()" 
+      class="mt-4 w-full bg-indigo-600 text-white py-4 rounded-lg text-lg font-bold hover:bg-indigo-700">
+      🚀 6개월 성과 예측 시작
+    </button>
+
+    <div id="result" class="mt-8 space-y-6 hidden"></div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-functions.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abcdef123456"
+    };
+    const app = initializeApp(firebaseConfig);
+    const functions = getFunctions(app);
+    const scanner = httpsCallable(functions, 'talentScanner');
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
